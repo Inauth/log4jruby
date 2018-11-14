@@ -95,5 +95,3 @@ See more in [log4jruby/examples](examples).
 ```
 See more in [log4jruby/examples](examples)..
 They should be runnable from the source.
-
-TEST
