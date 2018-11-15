@@ -11,7 +11,8 @@ Java::org.apache.logging.log4j.Logger.class_eval do
   end
 
   def ruby_logger
-    puts "calling ruby_logger"
+    puts self.class
+    puts self.class.ruby_logger_lock
     self.class.ruby_logger_lock.synchronize do
       @ruby_logger ||= Log4jruby::Logger.new(self)
     end
