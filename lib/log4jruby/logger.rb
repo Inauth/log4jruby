@@ -30,7 +30,7 @@ module Log4jruby
       # get Logger for name
       def[](name)
         name = name.nil? ? 'jruby' : "jruby.#{name.gsub('::', '.')}"
-        log4j = Java::org.apache.logging.log4j.Logger.getLogger(name)
+        log4j = Java::org.apache.logging.log4j.LogManager.getLogger(name)
         fetch_logger(log4j)
       end
 
@@ -43,7 +43,7 @@ module Log4jruby
 
       # Return root Logger(i.e. jruby)
       def root
-        log4j = Java::org.apache.logging.log4j.Logger.getLogger('jruby')
+        log4j = Java::org.apache.logging.log4j.LogManager.getLogger('jruby')
         fetch_logger(log4j)
       end
 
@@ -56,7 +56,7 @@ module Log4jruby
       private
 
       def fetch_logger(log4j_logger)
-        Java::org.apache.logging.log4j.Logger.getLogger(log4j_logger.getName).ruby_logger
+        Java::org.apache.logging.log4j.LogManager.getLogger(log4j_logger.getName).ruby_logger
       end
     end
 
