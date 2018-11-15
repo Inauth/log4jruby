@@ -22,8 +22,8 @@ configured (e.g., log4j.properties in the CLASSPATH). The examples should give y
   are logged with full java backtrace(including nested exceptions).
 * Logging config for your ruby code can be added to your existing configuration. Ruby logger names are mapped to dot separated names prefixed with <tt>.jruby</tt>
 ```ini
- log4j.appender.Ruby=org.apache.log4j.ConsoleAppender
- log4j.appender.Ruby.layout=org.apache.log4j.PatternLayout
+ log4j.appender.Ruby=org.apache.logging.log4j.ConsoleAppender
+ log4j.appender.Ruby.layout=org.apache.logging.log4j.PatternLayout
  log4j.appender.Ruby.layout.ConversionPattern=%5p %.50X{fileName} %X{methodName}:%X{lineNumber} - %m%n
  ...
  log4j.logger.jruby=info,Ruby

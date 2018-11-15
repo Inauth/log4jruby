@@ -6,17 +6,17 @@ module Log4jruby
 
   # Author::    Lenny Marks
   #
-  # Wrapper around org.apache.log4j.Logger with interface similar to standard ruby Logger.
+  # Wrapper around org.apache.logging.log4j.Logger with interface similar to standard ruby Logger.
   #
   # * Ruby and Java exceptions are logged with backtraces.
   # * fileName, lineNumber, methodName available to appender layouts via MDC variables(e.g. %X{lineNumber})
   class Logger
     LOG4J_LEVELS = {
-        Java::org.apache.log4j.Level::DEBUG => ::Logger::DEBUG,
-        Java::org.apache.log4j.Level::INFO => ::Logger::INFO,
-        Java::org.apache.log4j.Level::WARN => ::Logger::WARN,
-        Java::org.apache.log4j.Level::ERROR => ::Logger::ERROR,
-        Java::org.apache.log4j.Level::FATAL => ::Logger::FATAL,
+        Java::org.apache.logging.log4j.Level::DEBUG => ::Logger::DEBUG,
+        Java::org.apache.logging.log4j.Level::INFO => ::Logger::INFO,
+        Java::org.apache.logging.log4j.Level::WARN => ::Logger::WARN,
+        Java::org.apache.logging.log4j.Level::ERROR => ::Logger::ERROR,
+        Java::org.apache.logging.log4j.Level::FATAL => ::Logger::FATAL,
     }
 
     # turn tracing on to make fileName, lineNumber, and methodName available to
@@ -30,7 +30,7 @@ module Log4jruby
       # get Logger for name
       def[](name)
         name = name.nil? ? 'jruby' : "jruby.#{name.gsub('::', '.')}"
-        log4j = Java::org.apache.log4j.Logger.getLogger(name)
+        log4j = Java::org.apache.logging.log4j.Logger.getLogger(name)
         fetch_logger(log4j)
       end
 
@@ -43,12 +43,12 @@ module Log4jruby
 
       # Return root Logger(i.e. jruby)
       def root
-        log4j = Java::org.apache.log4j.Logger.getLogger('jruby')
+        log4j = Java::org.apache.logging.log4j.Logger.getLogger('jruby')
         fetch_logger(log4j)
       end
 
       def reset # :nodoc:
-        Java::org.apache.log4j.LogManager.getCurrentLoggers.each do |l|
+        Java::org.apache.logging.log4j.LogManager.getCurrentLoggers.each do |l|
           l.ruby_logger = nil
         end
       end
@@ -56,7 +56,7 @@ module Log4jruby
       private
 
       def fetch_logger(log4j_logger)
-        Java::org.apache.log4j.Logger.getLogger(log4j_logger.getName).ruby_logger
+        Java::org.apache.logging.log4j.Logger.getLogger(log4j_logger.getName).ruby_logger
       end
     end
 
@@ -73,15 +73,15 @@ module Log4jruby
     def level=(level)
       @logger.level = case level
       when :debug, ::Logger::DEBUG
-        Java::org.apache.log4j.Level::DEBUG
+        Java::org.apache.logging.log4j.Level::DEBUG
       when :info, ::Logger::INFO
-        Java::org.apache.log4j.Level::INFO
+        Java::org.apache.logging.log4j.Level::INFO
       when :warn, ::Logger::WARN
-        Java::org.apache.log4j.Level::WARN
+        Java::org.apache.logging.log4j.Level::WARN
       when :error, ::Logger::ERROR
-        Java::org.apache.log4j.Level::ERROR
+        Java::org.apache.logging.log4j.Level::ERROR
       when :fatal, ::Logger::FATAL
-        Java::org.apache.log4j.Level::FATAL
+        Java::org.apache.logging.log4j.Level::FATAL
       else
         raise NotImplementedError
       end
@@ -129,21 +129,21 @@ module Log4jruby
       send_to_log4j(:fatal, msg, error)
     end
 
-    # return org.apache.log4j.Logger instance backing this Logger
+    # return org.apache.logging.log4j.Logger instance backing this Logger
     def log4j_logger
       @logger
     end
 
     def debug?
-      @logger.isEnabledFor(Java::org.apache.log4j.Priority::DEBUG)
+      @logger.isEnabledFor(Java::org.apache.logging.log4j.Priority::DEBUG)
     end
 
     def info?
-      @logger.isEnabledFor(Java::org.apache.log4j.Priority::INFO)
+      @logger.isEnabledFor(Java::org.apache.logging.log4j.Priority::INFO)
     end
 
     def warn?
-      @logger.isEnabledFor(Java::org.apache.log4j.Priority::WARN)
+      @logger.isEnabledFor(Java::org.apache.logging.log4j.Priority::WARN)
     end
 
     def tracing?
@@ -224,7 +224,7 @@ module Log4jruby
     end
 
     def mdc
-      Java::org.apache.log4j.MDC
+      Java::org.apache.logging.log4j.MDC
     end
 
     def fetch_logger(log4j_logger)

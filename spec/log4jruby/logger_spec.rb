@@ -6,7 +6,7 @@ module Log4jruby
   describe Logger do
     before { Logger.reset }
 
-    MDC = Java::org.apache.log4j.MDC
+    MDC = Java::org.apache.logging.log4j.MDC
 
     subject { Logger.get('Test', :level => :debug) }
 
@@ -29,7 +29,7 @@ module Log4jruby
 
       it 'should accept attributes hash' do
         logger = Logger.get("loggex#{object_id}", :level => :fatal, :tracing => true)
-        expect(logger.log4j_logger.level).to eq(Java::org.apache.log4j.Level::FATAL)
+        expect(logger.log4j_logger.level).to eq(Java::org.apache.logging.log4j.Level::FATAL)
         expect(logger.tracing).to eq(true)
       end
 
@@ -67,7 +67,7 @@ module Log4jruby
     end
 
     specify 'the backing log4j Logger should be accessible via :log4j_logger' do
-      expect(Logger.get('X').log4j_logger).to be_instance_of(Java::org.apache.log4j.Logger)
+      expect(Logger.get('X').log4j_logger).to be_instance_of(Java::org.apache.logging.log4j.Logger)
     end
 
     describe 'Rails logger compatabity' do
